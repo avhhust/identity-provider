@@ -1,0 +1,47 @@
+server:
+  port: 9090
+  forward-headers-strategy: framework
+  servlet:
+    context-path: "/api"
+
+spring.application:
+    name: auth-server
+
+spring.jpa:
+  hibernate:
+    ddl-auto: update
+  properties:
+      hibernate.format_sql: true
+  show-sql: true
+
+spring.security:
+    oauth2:
+      authorizationserver.client:
+        gateway:
+          registration:
+            client-id: "gateway-client"
+            client-secret: "$2a$10$MJBgVvTA6m72lXb5qroMjulTwEKRtmtv9X3gNr9TpPJXtrW/bZ4BG"
+            client-authentication-methods:
+              - client_secret_basic
+            redirect-uris:
+              - "http://gateway:8000/login/oauth2/code/client"
+            authorization-grant-types:
+              - authorization_code
+              - refresh_token
+            scopes:
+              - openid
+              - profile
+          require-authorization-consent: true
+          require-proof-key: true
+
+      client:
+        registration:
+          github:
+            client-id: ${GITHUB_CLIENT_ID}
+            client-secret: ${GITHUB_CLIENT_SECRET}
+
+logging.level:
+  org.springframework.security: DEBUG
+#  org.springframework.security.web.session: DEBUG
+
+# ToDo: Move secrets to secret.yml file later

@@ -1,0 +1,38 @@
+.legal_cont{
+    position: relative;
+    margin: 30px 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.legal_cont{
+
+    .wrapper{
+        width: 70%;
+        min-width: 650px;
+        max-width: 900px;
+        margin-left: 40px;
+    }
+    
+    .menu{
+        height: 150px;
+        width: 100%;
+        max-width: 240px;
+        min-width: 200px;
+        padding: 10px 25px; 
+    
+        display: flex;
+        flex-direction: column;
+
+        list-style: upper-roman;
+    
+        border: 1px solid rgb(194, 194, 194);
+        border-radius: 3px;
+    }
+
+    
+    .menu a{
+        color: black;
+    }
+}

@@ -1,0 +1,126 @@
+.container{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f3f3;
+}
+
+.auth_container{
+    position: relative;
+    max-width: 470px;
+    width: 100%;
+    padding: 30px 60px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* add margin for each element except first(header) */
+.auth_container > *:not(:first-child){
+    margin-top: 15px;
+}
+
+.auth_container {
+
+    form {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        font-size: 14px;
+    }
+
+    form > *:not(:first-child, .forgot_link){
+        margin-top: 10px;
+    }
+
+    .bar{
+        width: 100%;
+        height: 40px;
+        border: 1.5px solid rgb(178, 178, 178);
+        border-radius: 4px;
+    }
+
+    .input-holder input{
+        border-radius: 4px;
+    }
+
+    button{
+        cursor: pointer;
+        border: 1.5px solid
+    }
+
+    .auth_btn{
+        background-color: #1d3e5bec;
+        border-color:#1d3e5bec;
+        color: white;
+    }
+
+    button + p{
+        margin-top: 5px;
+        color: rgb(82, 80, 80);
+    }
+
+    .agreement{
+        display: flex;
+        justify-content: center;
+        font-size: 0.68em;
+        color: rgb(82, 80, 80);
+    }
+
+    .agreement p{
+        width: 75%;
+    }
+
+    .agreement a{
+        text-decoration: underline;
+    }
+
+    .forgot_link{
+        margin-left: auto;
+        width: fit-content;
+        font-size: 14px;
+    }
+}
+
+#google{
+    color: rgb(82, 80, 80);
+    background-color: white;
+}
+
+#github {
+    background-color: black;
+    border-color: black;
+    color: white;
+}
+
+#text_with_lines{
+    color: grey;
+    position: relative;
+    text-align: center;
+}
+
+#text_with_lines::before,
+#text_with_lines::after{
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 45%;
+    height: 1px;
+    background-color: #CBC9C9;
+}
+
+#text_with_lines::before {
+    left: 0;
+    transform: translateY(-50%);
+}
+
+#text_with_lines::after {
+    right: 0;
+    transform: translateY(-50%);
+}
