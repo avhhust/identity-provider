@@ -3,12 +3,18 @@ package interviewgether.authserver.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.*;
 
 @Entity
 @Table(name = "roles")
+@NoArgsConstructor
+@Getter
+@Setter
 public class Role implements Serializable {
 
     @Id
@@ -25,37 +31,10 @@ public class Role implements Serializable {
             cascade = {CascadeType.PERSIST, CascadeType.MERGE}
     )
     @JsonBackReference
-    private List<AuthUser> authUsers = new ArrayList<>();
+    private List<AuthUser> users = new ArrayList<>();
 
-    public Role() {
-    }
-
-    public Role(String roleName) {
+    public Role(String roleName){
         this.roleName = roleName;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getRoleName() {
-        return roleName;
-    }
-
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
-    }
-
-    public List<AuthUser> getUsers() {
-        return authUsers;
-    }
-
-    public void setUsers(List<AuthUser> authUsers) {
-        this.authUsers = authUsers;
     }
 
     @Override

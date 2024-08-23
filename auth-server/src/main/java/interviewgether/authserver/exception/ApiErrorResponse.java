@@ -1,10 +1,13 @@
 package interviewgether.authserver.exception;
 
+import lombok.Getter;
+
 import java.time.OffsetDateTime;
 import java.util.Map;
 
 // This class serves as a template for displaying exception for client
 // Exceptions are mapped to ApiErrorResponse by ExceptionHandler
+@Getter
 public class ApiErrorResponse {
     private final OffsetDateTime timestamp;
     private final int statusCode;
@@ -18,21 +21,5 @@ public class ApiErrorResponse {
         this.status = status;
         this.message = message;
         this.details = details;
-    }
-
-    public int getStatusCode() {
-        return statusCode;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public Map<String, String> getDetails() {
-        return details;
     }
 }

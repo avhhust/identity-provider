@@ -1,15 +1,19 @@
 package interviewgether.authserver.service.impl;
 
+import interviewgether.authserver.dto.PasswordResetDTO;
 import interviewgether.authserver.dto.UserTransformer;
 import interviewgether.authserver.dto.UserRegisterDTO;
 import interviewgether.authserver.exception.DAL.*;
 import interviewgether.authserver.model.AuthUser;
+import interviewgether.authserver.model.OneTimePasscode;
 import interviewgether.authserver.model.Role;
 import interviewgether.authserver.repository.RoleRepository;
 import interviewgether.authserver.repository.UserRepository;
+import interviewgether.authserver.service.OneTimePasscodeService;
 import interviewgether.authserver.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,16 +22,12 @@ import org.springframework.util.Assert;
 import java.nio.CharBuffer;
 
 @Service
+@AllArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
-
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
+    private final OneTimePasscodeService oneTimePasscodeService;
 
     @Override
     @Transactional
@@ -95,7 +95,7 @@ public class UserServiceImpl implements UserService {
         Assert.notNull(email, "Email cannot be null");
         return userRepository
                 .findByEmail(email)
-                .orElseThrow(() -> new EmailNotFoundException("User with email: " + email + " doesn't exist"));
+                .orElseThrow(() -> new EmailNotFoundException("User with this email doesn't exist"));
     }
 
     @Override
@@ -103,7 +103,7 @@ public class UserServiceImpl implements UserService {
         Assert.notNull(username, "Username cannot be null");
         return userRepository
                 .findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User with username: " + username + " doesn't exist"));
+                .orElseThrow(() -> new UsernameNotFoundException("User with this username doesn't exist"));
     }
 
     @Override
@@ -111,6 +111,24 @@ public class UserServiceImpl implements UserService {
         Assert.notNull(username, "Username cannot be null");
         return userRepository
                 .findByUsernameWithRoles(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User with username: " + username + " doesn't exist"));
+                .orElseThrow(() -> new UsernameNotFoundException("User with this username doesn't exist"));
+    }
+
+    @Override
+    public void resetPassword(PasswordResetDTO passwordResetDTO) {
+        // ToDo: consider to refactor and move otp verification to OneTimePasscodeServiceImpl
+        // 1. Make sure code exists and it's for correct user
+        OneTimePasscode otp = oneTimePasscodeService.readByCode(passwordResetDTO.getCode());
+        String email = otp.getUser().getEmail();
+        if(!email.equals(passwordResetDTO.getEmail())){
+            throw new OneTimePasscodeNotValidException();
+        }
+        if(otp.getConfirmedAt() == null){
+            // 2. Check if code was confirmed
+            throw new OneTimePasscodeNotValidException();
+        }
+        AuthUser user = readByEmail(email);
+        user.setPassword(passwordEncoder.encode(CharBuffer.wrap(passwordResetDTO.getPassword())));
+        update(user);
     }
 }
