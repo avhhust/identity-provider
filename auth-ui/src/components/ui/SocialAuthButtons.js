@@ -1,10 +1,11 @@
 import React from 'react';
+import { api } from '../../api/apiService';
 
 
 const SocialAuthButtons = () => {
 
-    const handleClick = ({target}) => {
-        // window.location.href = BASE_URL + "/oauth2/authorization/" + target.id;
+    const handleClick = async ({target}) => {
+        window.location.href = "http://localhost:9090/api/oauth2/authorization/" + target.id;
     }
 
     return (

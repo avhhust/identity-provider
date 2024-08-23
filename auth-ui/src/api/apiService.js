@@ -1,10 +1,10 @@
 import axios from "axios";
 import { handleErrors } from "./apiErrorHandler";
 
-export const BASE_URL = 'http://localhost:9000/api';
+// export const BASE_URL = 'http://localhost:9000/api';
 
 export const api = axios.create({
-    baseURL: BASE_URL
+    // baseURL: BASE_URL
 });
 
 export const get = async (url) => {
@@ -15,28 +15,38 @@ export const get = async (url) => {
 
 export const post = async (url, body) => {
     return api
-            .post(
-                url,
-                body,
+            .post(url,body,
                 { 
-                    headers: {
+                    headers: { 
                         "Accept": "application/json",
-                        'Content-Type': 'application/x-www-form-urlencoded',
+                        "Content-Type": "application/json"
                     },
-                    withCredentials: true
                 }
             )
             .catch(handleErrors);
 }
 
 export const register = async (body) => {
-    return post('/register', body)
+    return api
+        .post('/api/auth/register', body,{
+            headers: { 
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            withCredentials: true
+        })
+        .catch(handleErrors);
 }
 
 export const login = async (body) => {
-    return post('/login', body)
+    return api
+        .post('/api/auth/login', body,{
+            headers: { 
+            "Accept": "application/json",
+            "Content-Type": "application/x-www-form-urlencoded"
+            },
+            withCredentials: true
+        })
+        .catch(handleErrors);
 }
 
-// api.interceptors.response.use(
-
-// )

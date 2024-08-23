@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 
 const InputField = (props) => {
     const {type, name, value, onChange, onBlur, onFocus, errors, hints, placeholder, required} = props;
@@ -14,7 +13,6 @@ const InputField = (props) => {
     return (
         <div>
             <div className="input-holder bar">
-                {/* {forgotUrl && <Link to={forgotUrl} className='above_link'>forgot {name}?</Link>} */}
                 <input
                     type={isPasswordVisible ? "text" : type}
                     name={name}

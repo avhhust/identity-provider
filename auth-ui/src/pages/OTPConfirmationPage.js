@@ -3,7 +3,7 @@ import CodeConfirmationForm from '../components/authorization/CodeConfirmationFo
 
 const CodeConfirmationPage = () => {
   return (
-    <CodeConfirmationForm/>
+    <CodeConfirmationForm forwardUrl='/reset-password'/>
   )
 }
 

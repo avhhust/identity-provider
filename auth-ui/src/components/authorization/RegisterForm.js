@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import axios from "axios";
 import InputField from "../ui/InputField.js";
 import TextWithLines from "../ui/TextWithLines.js"
-import SocialAuthButtons from "../authorization/SocialAuthButtons.js";
+import SocialAuthButtons from "../ui/SocialAuthButtons.js";
 import { Link, useNavigate } from "react-router-dom";
 import * as authServer from "../../api/apiService.js";
 
@@ -10,7 +9,7 @@ const initialState = { email: [], username: [], password: [] }
 
 const SignupForm = () => {
     const [userData, setUserData] = useState({  // stores user input data from the form
-        email: "email@test.com", username: "email", password: "Email123123"
+        email: "", username: "", password: ""
     });
     const [errors, setErrors] = useState(initialState); // used to store error messages that are displayed under the input field
     const [isLoading, setIsLoading] = useState(false); // used to prevent submissions while http request is processing
@@ -40,7 +39,7 @@ const SignupForm = () => {
                     errorMessages.push("Shoud contain at least 8 symbols");
                 }
                 if (!value.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+/)) {
-                    errorMessages.push("Should contain at least 1 capital letter and 1 number ")
+                    errorMessages.push("Should contain at least 1 capital letter and 1 number")
                 }
             }
         }
@@ -135,7 +134,7 @@ const SignupForm = () => {
                     errors={errors.password}
                 />
                 <div>
-                    <button className="bar auth_btn" type="submit" disabled={isLoading}>Sign Up</button>
+                    <button className="bar submit_btn" type="submit" disabled={isLoading}>Sign Up</button>
                     <p>Already have an account? <Link to={"/login"}>Login</Link></p>
                 </div>
             </form>

@@ -11,10 +11,10 @@ import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/RegisterPage';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import LegalRoot from './pages/LegalRoot';
-import EmailVerificationPage from './pages/EmailVerificationPage';
 import NotFoundPage from './pages/NotFoundPage';
-import ForgotCredentialsPage from './pages/ForgotCredentialsPage';
+import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import OTPConfirmationPage from './pages/OTPConfirmationPage';
+import ResetPasswordPage from './pages/ResetPasswordPage';
 
 export const router = createBrowserRouter([
   {
@@ -30,18 +30,17 @@ export const router = createBrowserRouter([
         element: <SignupPage/>,
       },
       {
-        path: '/api',
-        element: <EmailVerificationPage/>
-      },
-      {
-        path: '/otpconfirm/',
+
+        path: '/otp',
         element: <OTPConfirmationPage/>
       },
       {
-        path: '/forgot/',
-        element: <ForgotCredentialsPage/>,
-        children: [
-        ]
+        path: '/forgot',
+        element: <ForgotPasswordPage/>
+      },
+      {
+        path: '/reset-password',
+        element: <ResetPasswordPage/>
       }
     ]
   },
@@ -63,9 +62,9 @@ export const router = createBrowserRouter([
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <RouterProvider router={router}/>
-  </React.StrictMode>
+  // </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
