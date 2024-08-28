@@ -1,3 +1,2 @@
-# Identity and Access Management system
-
-### Built with Spring Authorization Server and React.js (UI)
+## Identity Provider
+Built with Spring Authorization Server and React.js (UI) for use in OAuth2 
