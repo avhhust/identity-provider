@@ -1,5 +1,8 @@
 package interviewgether.authserver.exception;
 
+import lombok.Getter;
+
+@Getter
 public class ApiServiceException extends RuntimeException{
     private final String message;
     private final String causedBy;
@@ -10,12 +13,4 @@ public class ApiServiceException extends RuntimeException{
         this.causedBy = causedBy;
     }
 
-    @Override
-    public String getMessage() {
-        return message;
-    }
-
-    public String getCausedBy() {
-        return causedBy;
-    }
 }

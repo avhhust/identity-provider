@@ -6,6 +6,7 @@ import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -33,6 +34,9 @@ import java.util.UUID;
 @EnableWebSecurity
 public class AuthServerConfig {
 
+    @Value("${webClientUrl}")
+    private String webClientUrl;
+
     @Bean
     @Order(1)
     public SecurityFilterChain authServerSecurityFilterChain(HttpSecurity http) throws Exception{
@@ -41,7 +45,7 @@ public class AuthServerConfig {
                 .oidc(Customizer.withDefaults()); // enables openid connect
         http.exceptionHandling( // handles unauthorized exceptions by redirecting to login page
                 c -> c.defaultAuthenticationEntryPointFor(
-                        new LoginUrlAuthenticationEntryPoint("http://localhost:9000/login"),
+                        new LoginUrlAuthenticationEntryPoint(webClientUrl + "/login"),
                         new MediaTypeRequestMatcher(MediaType.TEXT_HTML)
                 )
         );

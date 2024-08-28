@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import InputField from "../ui/InputField.js";
 import TextWithLines from "../ui/TextWithLines.js";
-import SocialAuthButtons from "../authorization/SocialAuthButtons.js";
-import { Link, useNavigate } from "react-router-dom";
+import SocialAuthButtons from "../ui/SocialAuthButtons.js";
+import { Link } from "react-router-dom";
 import * as authServer from "../../api/apiService.js";
 
 const LoginForm = () => {
     const [userData, setUserData] = useState({
-        username: 'test',
-        password: 'Test123123',
+        username: '', password: '',
     });
     const [errors, setErrors] = useState({
         email: [], username: [], password: []
@@ -29,7 +28,12 @@ const LoginForm = () => {
     const isFormValid = () => {
         let isValid = true;
         for (const field in userData) {
-            if (!validateField(field)) isValid = false;
+            if (errors[field].length !== 0) {
+                isValid = false;
+            }
+            else if (!validateField(field)) {
+                isValid = false;
+            }
         }
         return isValid;
     }
@@ -50,9 +54,15 @@ const LoginForm = () => {
         if (!isFormValid()) return;
         setIsLoading(true);
         const response = await authServer.login(userData);
-        if(response.status === 200){
+        if (response.status === 200) {
             window.location.href = response.data.redirectUrl;
         }
+        else if(response.status === 401){
+            for(let field in errors){
+                setErrors(prevErrors => ({...prevErrors, [field]: ["Username or password is incorrect!"]}));
+            }
+        }
+        // Handle other codes
         setIsLoading(false);
     }
 
@@ -80,9 +90,9 @@ const LoginForm = () => {
                     errors={errors.password}
                     forgotUrl={'/forgot?password'}
                 />
-                <Link to={"/forgot?password"} className="forgot_link">Forgot password?</Link>
+                <Link to={"/forgot?password"} className="text_under_input right">Forgot password?</Link>
                 <div>
-                    <button className="bar auth_btn" type={"submit"} disabled={isLoading}>Log In</button>
+                    <button className="bar submit_btn" type={"submit"} disabled={isLoading}>Log In</button>
                     <p>Don't have an account? <Link to={"/register"}>Sign up</Link></p>
                 </div>
             </form>

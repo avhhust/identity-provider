@@ -6,7 +6,7 @@ export const handleErrors = async (error) => {
             details: error.response.data.details || {}
         }
     } else if(error.request){
-        return { message: 'No response received from server', status: null};
+        return { message: 'No response received from the server', status: null};
     } else {
         return {message: error.message, status: null};
     }

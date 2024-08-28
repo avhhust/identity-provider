@@ -1,5 +1,6 @@
 package interviewgether.authserver.controller;
 
+import interviewgether.authserver.dto.PasswordResetDTO;
 import interviewgether.authserver.dto.UserRegisterDTO;
 import interviewgether.authserver.service.UserService;
 import jakarta.validation.Valid;
@@ -8,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping()
+@RequestMapping("/auth")
 public class AuthController {
     private final UserService userService;
 
@@ -21,4 +22,11 @@ public class AuthController {
         userService.create(userRegisterDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+    @PostMapping("/reset")
+    public ResponseEntity<?> resetPassword(@RequestBody @Valid PasswordResetDTO passwordResetDTO){
+        userService.resetPassword(passwordResetDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

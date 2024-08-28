@@ -1,5 +1,6 @@
 package interviewgether.authserver.service;
 
+import interviewgether.authserver.dto.PasswordResetDTO;
 import interviewgether.authserver.dto.UserRegisterDTO;
 import interviewgether.authserver.model.AuthUser;
 
@@ -8,6 +9,7 @@ public interface UserService {
     void create(UserRegisterDTO userRegisterDTO);
     AuthUser readById(long id);
     AuthUser update(AuthUser updatedAuthUser);
+    void resetPassword(PasswordResetDTO passwordResetDTO);
     void delete(long id);
     AuthUser readByEmail(String email);
     AuthUser readByUsername(String username);
